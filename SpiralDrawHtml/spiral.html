@@ -4,19 +4,29 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Canvas tutorial</title>
+  <title>Spiral Draw</title>
   <script type="text/javascript" src="spiral.js">
   </script>
   <link rel="stylesheet" href="spiral.css">
 </head>
 
 <body onload="draw();">
+  <a href="#" class="float" onclick="toggleToolbox()" id="settings">
+    <i class="fa fa-plus my-float"></i>
+  </a>
   <div id="toolbox">
-    <div>
-      <input type="color" name="chosencolor" id="chosencolor" value="#ff0000" >
+    <div id="closeToolboxDiv">
+      <a href="#" onclick="closeToolbox()" id="closeToolbox">
+        X
+      </a>
     </div>
     <div>
-      <button id="clearBtn" onclick="init()" class="button1">Clear</button>
+      <input type="color" name="chosencolor" id="chosencolor" value="#ff0000">
+      <label for="chosencolor" id="labelForChosencolor">Color</label>
+    </div>
+    <div>
+      <button id="clearBtn" onclick="init()" class="button1">X</button>
+      <label for="clearBtn" id="labelForClearBtn">Clear</label>
     </div>
     <div>
       <input type="checkbox" id="mirror" name="mirror" checked=true>
@@ -25,12 +35,12 @@
     <div class="slidecontainer">
       <input type="range" min="1" max="360" value="12" class="slider" id="folds">
       <label for="folds" id="labelForFolds">Folds(12)</label>
-
+    </div>
+    <div class="slidecontainer">
       <input type="range" min="1" max="10" value="2" class="slider" id="thickness">
       <label for="thickness" id="labelForThickness">Thickness(2)</label>
     </div>
   </div>
-  <!--width="500" height="300"-->
   <canvas id="SpiralDraw" block></canvas>
 </body>
 

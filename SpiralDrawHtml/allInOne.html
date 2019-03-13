@@ -4,9 +4,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Canvas tutorial</title>
-  <script type="text/javascript">
-  // Author : Sharib Jafari
+  <title>Spiral Draw</title>
+  <script type="text/javascript">// Author : Sharib Jafari
   var canvasId = 'SpiralDraw';
   // Flag to signal mouse drag/ touch move
   var recordCoordinates;
@@ -44,6 +43,36 @@
   var sColor = "#ff0000";
   // Stroke Width
   var sWidth = 2;
+  // Toggle flag for toolbox visibility
+  var toggle = false;
+
+  // Close Toolbox
+  function closeToolbox() {
+    toggle = false;
+    toggleToolbox();
+  }
+
+  // Toggle toolbox visibility
+  function toggleToolbox() {
+    var visibility; // = 'hidden';
+    var settings = document.getElementById("settings"),
+      toolBox = document.getElementById("toolbox");
+    settings.style.visibility = toolBox.style.visibility;
+    if (toggle) {
+      toggle = false;
+      visibility = 'visible';
+    } else {
+      toggle = true;
+      visibility = 'hidden';
+    }
+    toolBox.style.visibility = visibility;
+    var i,
+      tags = document.getElementById("toolbox").getElementsByTagName("*"),
+      total = tags.length;
+    for (i = 0; i < total; i++) {
+      tags[i].style.visibility = visibility;
+    }
+  }
 
   // Clears everything
   function init() {
@@ -77,21 +106,17 @@
   //  Initial Function
   function draw() {
     init();
+    toggleToolbox();
     var canvas = document.getElementById(canvasId);
     if (canvas.getContext) {
       var ctx = canvas.getContext('2d');
-      var toolBox = document.getElementById("toolbox");
-      var toolBoxHeight = toolBox.offsetHeight;
-      console.log(toolBoxHeight);
-      console.log(window.innerHeight);
       var margin = 30;
       ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight - toolBoxHeight - margin;
+      ctx.canvas.height = window.innerHeight - margin;
       // Calculate center of canvas
       midx = (canvas.width) / 2;
       midy = (canvas.height) / 2;
       canvasCenter = new Point(midx, midy);
-      console.log(canvasCenter);
       // Initialize folds slider
       var fldSlider = document.getElementById("folds");
       fldSlider.oninput = function() {
@@ -285,28 +310,36 @@
     return (angle * (Math.PI / 180));
   }
   //............................................
+
   </script>
   <style>
   /*Author : Sharib Jafari*/
   body {
-    /*overflow: hidden; /*Disable Scrolling*/
+    overflow: hidden; /*Disable Scrolling*/
     margin: 0;
-    font-size: 18px;
+    font-size: 28px;
+    font-family: monospace;
   }
 
-  #SpiralDraw {}
+  #closeToolboxDiv {
+    position: absolute;
+    left: 300px;
+  }
 
   #toolbox {
-    display: flex;
+    position: fixed;
+    width: fit-content;
+    background-color: #ffffff;
+    visibility: flow-root;
+    text-align: left;
     border: 1px solid black;
     padding: 1px;
-    text-align: center;
+    top: 10px;
+    left: 10px;
   }
 
   div {
     margin: 8px;
-    /*min-width: 100px;
-  min-height: 75px;*/
   }
 
   #chosencolor, #clearBtn, #labelForMirror {
@@ -345,16 +378,46 @@
     cursor: pointer;
   }
 
+  .float {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    top: 10px;
+    left: 10px;
+    background-color: #0C9;
+    background-image: url('settings.png');
+    background-size: cover;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+  }
+
+  .my-float {
+    margin-top: 22px;
+  }
+
+
   </style>
 </head>
 
 <body onload="draw();">
+  <a href="#" class="float" onclick="toggleToolbox()" id="settings">
+    <i class="fa fa-plus my-float"></i>
+  </a>
   <div id="toolbox">
-    <div>
-      <input type="color" name="chosencolor" id="chosencolor" value="#ff0000" >
+    <div id="closeToolboxDiv">
+      <a href="#" onclick="closeToolbox()" id="closeToolbox">
+        X
+      </a>
     </div>
     <div>
-      <button id="clearBtn" onclick="init()" class="button1">Clear</button>
+      <input type="color" name="chosencolor" id="chosencolor" value="#ff0000">
+      <label for="chosencolor" id="labelForChosencolor">Color</label>
+    </div>
+    <div>
+      <button id="clearBtn" onclick="init()" class="button1">X</button>
+      <label for="clearBtn" id="labelForClearBtn">Clear</label>
     </div>
     <div>
       <input type="checkbox" id="mirror" name="mirror" checked=true>
@@ -363,12 +426,12 @@
     <div class="slidecontainer">
       <input type="range" min="1" max="360" value="12" class="slider" id="folds">
       <label for="folds" id="labelForFolds">Folds(12)</label>
-
+    </div>
+    <div class="slidecontainer">
       <input type="range" min="1" max="10" value="2" class="slider" id="thickness">
       <label for="thickness" id="labelForThickness">Thickness(2)</label>
     </div>
   </div>
-  <!--width="500" height="300"-->
   <canvas id="SpiralDraw" block></canvas>
 </body>
 

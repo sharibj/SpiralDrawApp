@@ -1,23 +1,30 @@
 /*Author : Sharib Jafari*/
 body {
-  /*overflow: hidden; /*Disable Scrolling*/
+  overflow: hidden; /*Disable Scrolling*/
   margin: 0;
-  font-size: 18px;
+  font-size: 28px;
+  font-family: monospace;
 }
 
-#SpiralDraw {}
+#closeToolboxDiv {
+  position: absolute;
+  left: 300px;
+}
 
 #toolbox {
-  display: flex;
+  position: fixed;
+  width: fit-content;
+  background-color: #ffffff;
+  visibility: flow-root;
+  text-align: left;
   border: 1px solid black;
   padding: 1px;
-  text-align: center;
+  top: 10px;
+  left: 10px;
 }
 
 div {
   margin: 8px;
-  /*min-width: 100px;
-min-height: 75px;*/
 }
 
 #chosencolor, #clearBtn, #labelForMirror {
@@ -54,4 +61,23 @@ min-height: 75px;*/
   height: 15px;
   background: #4CAF50;
   cursor: pointer;
+}
+
+.float {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  top: 10px;
+  left: 10px;
+  background-color: #0C9;
+  background-image: url('settings.png');
+  background-size: cover;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+}
+
+.my-float {
+  margin-top: 22px;
 }

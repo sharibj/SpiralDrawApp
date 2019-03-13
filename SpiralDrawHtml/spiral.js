@@ -36,6 +36,36 @@ var paintCount = 0;
 var sColor = "#ff0000";
 // Stroke Width
 var sWidth = 2;
+// Toggle flag for toolbox visibility
+var toggle = false;
+
+// Close Toolbox
+function closeToolbox() {
+  toggle = false;
+  toggleToolbox();
+}
+
+// Toggle toolbox visibility
+function toggleToolbox() {
+  var visibility; // = 'hidden';
+  var settings = document.getElementById("settings"),
+    toolBox = document.getElementById("toolbox");
+  settings.style.visibility = toolBox.style.visibility;
+  if (toggle) {
+    toggle = false;
+    visibility = 'visible';
+  } else {
+    toggle = true;
+    visibility = 'hidden';
+  }
+  toolBox.style.visibility = visibility;
+  var i,
+    tags = document.getElementById("toolbox").getElementsByTagName("*"),
+    total = tags.length;
+  for (i = 0; i < total; i++) {
+    tags[i].style.visibility = visibility;
+  }
+}
 
 // Clears everything
 function init() {
@@ -69,21 +99,17 @@ function clearCanvas() {
 //  Initial Function
 function draw() {
   init();
+  toggleToolbox();
   var canvas = document.getElementById(canvasId);
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    var toolBox = document.getElementById("toolbox");
-    var toolBoxHeight = toolBox.offsetHeight;
-    console.log(toolBoxHeight);
-    console.log(window.innerHeight);
     var margin = 30;
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight - toolBoxHeight - margin;
+    ctx.canvas.height = window.innerHeight - margin;
     // Calculate center of canvas
     midx = (canvas.width) / 2;
     midy = (canvas.height) / 2;
     canvasCenter = new Point(midx, midy);
-    console.log(canvasCenter);
     // Initialize folds slider
     var fldSlider = document.getElementById("folds");
     fldSlider.oninput = function() {
