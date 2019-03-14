@@ -23,7 +23,7 @@
       return constructor;
     }
     // Struct to store coordinates of a point
-    var Point = makeStruct("x y");
+    var Point = makeStruct("x y color");
     // Flag to turn on/off mirroring
     var mirror = true;
     // Number of folds
@@ -117,7 +117,7 @@
         // Calculate center of canvas
         midx = (canvas.width) / 2;
         midy = (canvas.height) / 2;
-        canvasCenter = new Point(midx, midy);
+        canvasCenter = new Point(midx, midy, sColor);
         // Initialize folds slider
         var fldSlider = document.getElementById("folds");
         fldSlider.oninput = function() {
@@ -187,7 +187,7 @@
       // Radius is the distance between center of the canvas and the point
       var radius = distance(canvasCenter, point);
       // Get the angle
-      var angle = getAngleForPoint(new Point(point.x - midx, point.y - midy), radius);
+      var angle = getAngleForPoint(new Point(point.x - midx, point.y - midy, sColor), radius);
       // Calculate and add points for each fold
       for (var counter = 0; counter < folds; counter++) {
         var angleIncrement = (360 / folds) * counter;
@@ -195,7 +195,7 @@
         var calculatedPoint = getPointForAngle(incAngle, radius);
         var x = calculatedPoint.x + midx;
         var y = calculatedPoint.y + midy;
-        allPoints[counter].push(new Point(x, y));
+        allPoints[counter].push(new Point(x, y, sColor));
         // Mirror the point on X axis if mirroring is on
         if (mirror) {
           var absDiff = Math.abs(x - midx);
@@ -204,14 +204,14 @@
           } else {
             x = midx + absDiff;
           }
-          allPoints[counter + folds].push(new Point(x, y));
+          allPoints[counter + folds].push(new Point(x, y, sColor));
         }
       }
     }
 
     // Start drawing line
     function beginLine(isMouse) {
-      var point = new Point(getX(isMouse), getY(isMouse));
+      var point = new Point(getX(isMouse), getY(isMouse), sColor);
       //if (isPointInRange(point)) {
       recordCoordinates = true;
       addPointToList(point);
@@ -234,11 +234,9 @@
     // Trace line by adding all coordinates to the list
     function traceLine(ctx, isMouse) {
       if (recordCoordinates) {
-        var point = new Point(getX(isMouse), getY(isMouse));
-        //if (isPointInRange(point)) {
+        var point = new Point(getX(isMouse), getY(isMouse), sColor);
         addPointToList(point);
         paint(ctx);
-        //}
       }
     }
 
@@ -296,7 +294,7 @@
       var angle = toRadians(angle);
       var x = radius * Math.cos(angle);
       var y = radius * Math.sin(angle);
-      return new Point(x, y);
+      return new Point(x, y, sColor);
     }
 
     function distance(start, end) {

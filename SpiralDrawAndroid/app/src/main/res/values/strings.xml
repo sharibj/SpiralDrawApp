@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SpiralDraw</string>
+    <string name="msg_downloading">Downloading</string>
+    <string name="msg_file_downloaded">Downloaded</string>
+    <string name="error_downloading">Couldn\'t download</string>
 </resources>
