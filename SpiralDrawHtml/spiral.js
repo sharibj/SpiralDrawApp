@@ -33,7 +33,7 @@ var canvasCenter;
 // Keeps track of how many lines are already drawn from the list.
 var paintCount = 0;
 // Stroke color
-var sColor = "#ff0000";
+var sColor = "#000000";
 // Stroke Width
 var sWidth = 2;
 // Toggle flag for toolbox visibility
@@ -103,9 +103,8 @@ function draw() {
   var canvas = document.getElementById(canvasId);
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    var margin = 30;
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight - margin;
+    ctx.canvas.height = window.innerHeight;
     // Calculate center of canvas
     midx = (canvas.width) / 2;
     midy = (canvas.height) / 2;
