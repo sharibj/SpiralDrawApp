@@ -121,7 +121,7 @@ function draw() {
     var thckSlider = document.getElementById("thickness");
     thckSlider.oninput = function() {
       sWidth = parseInt(this.value);
-      document.getElementById("labelForThickness").innerHTML = "thickness(" + sWidth + ")";
+      document.getElementById("labelForThickness").innerHTML = "Thickness(" + sWidth + ")";
     }
 
     var mirrorCheck = document.getElementById("mirror");
